@@ -1,0 +1,16 @@
+numpy
+pandas
+scikit-learn
+xgboost
+lightgbm
+joblib
+fastapi
+uvicorn
+pydantic
+requests
+python-dotenv
+matplotlib
+seaborn
+plotly
+python-dateutil
+pytz
