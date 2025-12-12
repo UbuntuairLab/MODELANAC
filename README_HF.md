@@ -12,11 +12,11 @@ license: mit
 
 API de prédiction IA pour la gestion du trafic aérien utilisant XGBoost et LightGBM.
 
-**Space Hugging Face**: [TAGBA/ubuntuairlab](https://huggingface.co/spaces/TAGBA/ubuntuairlab) 
-**API URL**: https://tagba-ubuntuairlab.hf.space 
+**Space Hugging Face**: [TAGBA/ubuntuairlab](https://huggingface.co/spaces/TAGBA/ubuntuairlab)  
+**API URL**: https://tagba-ubuntuairlab.hf.space  
 **Documentation**: https://tagba-ubuntuairlab.hf.space/docs
 
-## Fonctionnalités
+##  Fonctionnalités
 
 ### Modèle 1: Prédiction ETA/ETD
 - Algorithme: **XGBoost Regressor**
@@ -33,38 +33,38 @@ API de prédiction IA pour la gestion du trafic aérien utilisant XGBoost et Lig
 - Sorties: Risques (conflit, saturation) + décision recommandée
 - Performance: 96.75% accuracy
 
-## Utilisation rapide
+##  Utilisation rapide
 
 ### Exemple Python
 ```python
 import requests
 
 response = requests.post(
- "https://tagba-ubuntuairlab.hf.space/predict",
- json={
- "vitesse_actuelle": 250.0,
- "altitude": 3500.0,
- "distance_piste": 15.5,
- "temperature": 22.0,
- "vent_vitesse": 12.0,
- "visibilite": 10.0,
- "pluie": 0.5,
- "compagnie": "Air France",
- "retard_historique_compagnie": 8.5,
- "trafic_approche": 5,
- "occupation_tarmac": 0.65,
- "type_avion": "A320",
- "historique_occupation_avion": 45.0,
- "type_vol": 0,
- "passagers_estimes": 180,
- "disponibilite_emplacements": 12,
- "occupation_actuelle": 0.7,
- "meteo_score": 0.85,
- "trafic_entrant": 8,
- "trafic_sortant": 6,
- "priorite_vol": 0,
- "emplacements_futurs_libres": 3
- }
+    "https://tagba-ubuntuairlab.hf.space/predict",
+    json={
+        "vitesse_actuelle": 250.0,
+        "altitude": 3500.0,
+        "distance_piste": 15.5,
+        "temperature": 22.0,
+        "vent_vitesse": 12.0,
+        "visibilite": 10.0,
+        "pluie": 0.5,
+        "compagnie": "Air France",
+        "retard_historique_compagnie": 8.5,
+        "trafic_approche": 5,
+        "occupation_tarmac": 0.65,
+        "type_avion": "A320",
+        "historique_occupation_avion": 45.0,
+        "type_vol": 0,
+        "passagers_estimes": 180,
+        "disponibilite_emplacements": 12,
+        "occupation_actuelle": 0.7,
+        "meteo_score": 0.85,
+        "trafic_entrant": 8,
+        "trafic_sortant": 6,
+        "priorite_vol": 0,
+        "emplacements_futurs_libres": 3
+    }
 )
 
 result = response.json()
@@ -79,11 +79,11 @@ print(f"Décision: {result['model_3_conflict']['decision_label']}")
 - `GET /models/info` - Détails des modèles
 - `GET /docs` - Documentation OpenAPI interactive
 
-## Documentation complète
+##  Documentation complète
 
 Consultez la documentation complète d'intégration: [API_INTEGRATION_GUIDE.md](API_INTEGRATION_GUIDE.md)
 
-## Auteur
+##  Auteur
 
-**Username Hugging Face**: TAGBA 
+**Username Hugging Face**: TAGBA  
 **Space**: ubuntuairlab

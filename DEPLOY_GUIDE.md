@@ -12,12 +12,12 @@
 
 1. Allez sur https://huggingface.co/new-space
 2. Remplissez:
- - **Owner**: Votre username
- - **Space name**: `air-traffic-ml-api`
- - **License**: MIT
- - **Select the Space SDK**: Docker
- - **Space hardware**: CPU basic (gratuit) ou CPU upgrade (payant mais plus rapide)
- - **Visibility**: Public ou Private
+   - **Owner**: Votre username
+   - **Space name**: `air-traffic-ml-api`
+   - **License**: MIT
+   - **Select the Space SDK**: Docker
+   - **Space hardware**: CPU basic (gratuit) ou CPU upgrade (payant mais plus rapide)
+   - **Visibility**: Public ou Private
 
 3. Cliquez sur "Create Space"
 
@@ -109,20 +109,20 @@ nano deploy_hf.sh
 ## Méthode 3: Via l'Interface Web (Plus Simple)
 
 1. **Créer le Space** sur https://huggingface.co/new-space
- - Choisir Docker comme SDK
+   - Choisir Docker comme SDK
 
 2. **Uploader les fichiers manuellement**:
- - Cliquez sur "Files" dans votre Space
- - Cliquez sur "Add file" > "Upload files"
- - Glissez-déposez tous les dossiers et fichiers:
- - `models/` (avec les .pkl)
- - `api/`
- - `config/`
- - `utils/`
- - `scripts/`
- - `requirements.txt`
- - `Dockerfile`
- - `README_HF.md` (renommer en README.md)
+   - Cliquez sur "Files" dans votre Space
+   - Cliquez sur "Add file" > "Upload files"
+   - Glissez-déposez tous les dossiers et fichiers:
+     - `models/` (avec les .pkl)
+     - `api/`
+     - `config/`
+     - `utils/`
+     - `scripts/`
+     - `requirements.txt`
+     - `Dockerfile`
+     - `README_HF.md` (renommer en README.md)
 
 3. **Attendre la construction**: L'image Docker se construit automatiquement
 
@@ -154,32 +154,32 @@ curl https://USERNAME-air-traffic-ml-api.hf.space/health
 
 # Prédiction
 curl -X POST "https://USERNAME-air-traffic-ml-api.hf.space/predict" \
- -H "Content-Type: application/json" \
- -d '{
- "callsign": "AFR1234",
- "vitesse_actuelle": 450,
- "altitude": 6000,
- "distance_piste": 40,
- "temperature": 15,
- "vent_vitesse": 25,
- "visibilite": 8,
- "pluie": 2,
- "compagnie": "AF",
- "retard_historique_compagnie": 12,
- "trafic_approche": 8,
- "occupation_tarmac": 0.7,
- "type_avion": "A320",
- "historique_occupation_avion": 45,
- "type_vol": 1,
- "passagers_estimes": 180,
- "disponibilite_emplacements": 12,
- "occupation_actuelle": 0.75,
- "meteo_score": 4,
- "trafic_entrant": 10,
- "trafic_sortant": 6,
- "priorite_vol": 3,
- "emplacements_futurs_libres": 8
- }'
+  -H "Content-Type: application/json" \
+  -d '{
+    "callsign": "AFR1234",
+    "vitesse_actuelle": 450,
+    "altitude": 6000,
+    "distance_piste": 40,
+    "temperature": 15,
+    "vent_vitesse": 25,
+    "visibilite": 8,
+    "pluie": 2,
+    "compagnie": "AF",
+    "retard_historique_compagnie": 12,
+    "trafic_approche": 8,
+    "occupation_tarmac": 0.7,
+    "type_avion": "A320",
+    "historique_occupation_avion": 45,
+    "type_vol": 1,
+    "passagers_estimes": 180,
+    "disponibilite_emplacements": 12,
+    "occupation_actuelle": 0.75,
+    "meteo_score": 4,
+    "trafic_entrant": 10,
+    "trafic_sortant": 6,
+    "priorite_vol": 3,
+    "emplacements_futurs_libres": 8
+  }'
 ```
 
 ## Problèmes Courants

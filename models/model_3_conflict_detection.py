@@ -362,9 +362,9 @@ class ConflictDetectionModel:
         if risk_conflict > 0.8 or risk_saturation > 0.8:
             return " ALERTE CRITIQUE - Action immédiate requise"
         elif risk_conflict > 0.6 or risk_saturation > 0.6:
-            return " ATTENTION - Surveiller la situation"
+            return "🟡 ATTENTION - Surveiller la situation"
         elif risk_conflict > 0.4 or risk_saturation > 0.4:
-            return " VIGILANCE - Situation sous contrôle"
+            return "🟢 VIGILANCE - Situation sous contrôle"
         else:
             return " NORMAL - Aucune action nécessaire"
     
