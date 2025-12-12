@@ -1,13 +1,13 @@
 # Guide de Démarrage Rapide - Air Traffic ML
 
-## 🚀 Installation
+## Installation
 
 ### 1. Créer un environnement virtuel
 
 ```bash
 cd /home/computer-12/Documents/MODELANAC
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
+source venv/bin/activate # Linux/Mac
 ```
 
 ### 2. Installer les dépendances
@@ -16,31 +16,31 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 ```
 
-## 📚 Architecture du Projet
+## Architecture du Projet
 
 ```
 MODELANAC/
-├── models/
-│   ├── model_1_eta_prediction.py      # Modèle 1: Prédiction ETA/ETD (XGBoost)
-│   ├── model_2_occupation.py          # Modèle 2: Durée d'occupation (LightGBM)
-│   ├── model_3_conflict_detection.py  # Modèle 3: Détection conflits (XGBoost Classifier)
-│   ├── ml_pipeline.py                 # Pipeline d'orchestration
-│   ├── model_1_eta.pkl               # Modèle 1 sauvegardé (après entraînement)
-│   ├── model_2_occupation.pkl        # Modèle 2 sauvegardé (après entraînement)
-│   └── model_3_conflict.pkl          # Modèle 3 sauvegardé (après entraînement)
-├── api/
-│   └── fastapi_app.py                # API REST FastAPI
-├── scripts/
-│   ├── train_models.py               # Script d'entraînement
-│   └── test_pipeline.py              # Script de test
-├── config/
-│   └── config.py                     # Configuration centralisée
-├── data/                             # Données (à créer)
-├── logs/                             # Logs (à créer)
-└── requirements.txt                  # Dépendances Python
+ models/
+ model_1_eta_prediction.py # Modèle 1: Prédiction ETA/ETD (XGBoost)
+ model_2_occupation.py # Modèle 2: Durée d'occupation (LightGBM)
+ model_3_conflict_detection.py # Modèle 3: Détection conflits (XGBoost Classifier)
+ ml_pipeline.py # Pipeline d'orchestration
+ model_1_eta.pkl # Modèle 1 sauvegardé (après entraînement)
+ model_2_occupation.pkl # Modèle 2 sauvegardé (après entraînement)
+ model_3_conflict.pkl # Modèle 3 sauvegardé (après entraînement)
+ api/
+ fastapi_app.py # API REST FastAPI
+ scripts/
+ train_models.py # Script d'entraînement
+ test_pipeline.py # Script de test
+ config/
+ config.py # Configuration centralisée
+ data/ # Données (à créer)
+ logs/ # Logs (à créer)
+ requirements.txt # Dépendances Python
 ```
 
-## 🎓 Étape 1: Entraîner les Modèles
+## Étape 1: Entraîner les Modèles
 
 ### Option A: Utilisation du script d'entraînement
 
@@ -67,13 +67,13 @@ pipeline = AirTrafficMLPipeline()
 metrics = pipeline.train_all_models(df_m1, df_m2, df_m3)
 ```
 
-## 🧪 Étape 2: Tester le Pipeline
+## Étape 2: Tester le Pipeline
 
 ```bash
 python scripts/test_pipeline.py
 ```
 
-## 🌐 Étape 3: Lancer l'API FastAPI
+## Étape 3: Lancer l'API FastAPI
 
 ### Option A: Lancement direct
 
@@ -94,7 +94,7 @@ Accédez à:
 - **Documentation alternative**: http://localhost:8000/redoc
 - **API**: http://localhost:8000
 
-## 📡 Utilisation de l'API
+## Utilisation de l'API
 
 ### 1. Vérifier l'état de l'API
 
@@ -106,32 +106,32 @@ curl http://localhost:8000/health
 
 ```bash
 curl -X POST "http://localhost:8000/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "callsign": "AFR1234",
-    "vitesse_actuelle": 450,
-    "altitude": 6000,
-    "distance_piste": 40,
-    "temperature": 15,
-    "vent_vitesse": 25,
-    "visibilite": 8,
-    "pluie": 2,
-    "compagnie": "AF",
-    "retard_historique_compagnie": 12,
-    "trafic_approche": 8,
-    "occupation_tarmac": 0.7,
-    "type_avion": "A320",
-    "historique_occupation_avion": 45,
-    "type_vol": 1,
-    "passagers_estimes": 180,
-    "disponibilite_emplacements": 12,
-    "occupation_actuelle": 0.75,
-    "meteo_score": 4,
-    "trafic_entrant": 10,
-    "trafic_sortant": 6,
-    "priorite_vol": 3,
-    "emplacements_futurs_libres": 8
-  }'
+ -H "Content-Type: application/json" \
+ -d '{
+ "callsign": "AFR1234",
+ "vitesse_actuelle": 450,
+ "altitude": 6000,
+ "distance_piste": 40,
+ "temperature": 15,
+ "vent_vitesse": 25,
+ "visibilite": 8,
+ "pluie": 2,
+ "compagnie": "AF",
+ "retard_historique_compagnie": 12,
+ "trafic_approche": 8,
+ "occupation_tarmac": 0.7,
+ "type_avion": "A320",
+ "historique_occupation_avion": 45,
+ "type_vol": 1,
+ "passagers_estimes": 180,
+ "disponibilite_emplacements": 12,
+ "occupation_actuelle": 0.75,
+ "meteo_score": 4,
+ "trafic_entrant": 10,
+ "trafic_sortant": 6,
+ "priorite_vol": 3,
+ "emplacements_futurs_libres": 8
+ }'
 ```
 
 ### 3. Entraîner via l'API (données synthétiques)
@@ -140,7 +140,7 @@ curl -X POST "http://localhost:8000/predict" \
 curl -X POST "http://localhost:8000/train"
 ```
 
-## 🔮 Les 3 Modèles Expliqués
+## Les 3 Modèles Expliqués
 
 ### Modèle 1: Prédiction ETA/ETD (XGBoost Regressor)
 
@@ -197,16 +197,16 @@ curl -X POST "http://localhost:8000/train"
 - Risque de conflit (0-1)
 - Risque de saturation (0-1)
 - Décision recommandée:
-  - 0: Garder sur emplacement actuel
-  - 1: Réaffecter à un autre emplacement commercial
-  - 2: Envoyer au parking militaire
-  - 3: Mettre en attente aérienne
+ - 0: Garder sur emplacement actuel
+ - 1: Réaffecter à un autre emplacement commercial
+ - 2: Envoyer au parking militaire
+ - 3: Mettre en attente aérienne
 
 **Performances typiques**:
 - Accuracy conflit: ~85-92%
 - Accuracy décision: ~80-88%
 
-## 🎯 Exemples d'Utilisation Python
+## Exemples d'Utilisation Python
 
 ### Utilisation du pipeline complet
 
@@ -215,17 +215,17 @@ from models.ml_pipeline import AirTrafficMLPipeline
 
 # Charger les modèles
 pipeline = AirTrafficMLPipeline(
-    model1_path='models/model_1_eta.pkl',
-    model2_path='models/model_2_occupation.pkl',
-    model3_path='models/model_3_conflict.pkl'
+ model1_path='models/model_1_eta.pkl',
+ model2_path='models/model_2_occupation.pkl',
+ model3_path='models/model_3_conflict.pkl'
 )
 
 # Données d'un vol
 flight_data = {
-    'callsign': 'AFR1234',
-    'vitesse_actuelle': 450,
-    'altitude': 6000,
-    # ... autres features
+ 'callsign': 'AFR1234',
+ 'vitesse_actuelle': 450,
+ 'altitude': 6000,
+ # ... autres features
 }
 
 # Prédiction
@@ -248,16 +248,16 @@ model.load('models/model_1_eta.pkl')
 
 # Prédire
 df = pd.DataFrame([{
-    'vitesse_actuelle': 450,
-    'altitude': 6000,
-    # ... autres features
+ 'vitesse_actuelle': 450,
+ 'altitude': 6000,
+ # ... autres features
 }])
 
 predictions = model.predict(df)
 print(f"ETA ajusté: {predictions['eta_ajuste'][0]:.1f} min")
 ```
 
-## 📊 Feature Importance
+## Feature Importance
 
 Pour voir les features les plus importantes:
 
@@ -272,7 +272,7 @@ importance = model.get_feature_importance(top_n=10)
 print(importance)
 ```
 
-## 🔧 Configuration
+## Configuration
 
 Modifiez `config/config.py` pour:
 - Ajuster les hyperparamètres des modèles
@@ -280,27 +280,27 @@ Modifiez `config/config.py` pour:
 - Configurer l'API
 - Définir les temps de base d'occupation par avion
 
-## 📝 Logs
+## Logs
 
 Les logs sont automatiquement générés dans `logs/air_traffic_ml.log`
 
-## ⚡ Performance Tips
+## Performance Tips
 
 1. **Pour l'entraînement**:
-   - Utilisez plus de données (--samples 5000)
-   - Ajustez les hyperparamètres dans config.py
+ - Utilisez plus de données (--samples 5000)
+ - Ajustez les hyperparamètres dans config.py
 
 2. **Pour la production**:
-   - Activez le caching des prédictions
-   - Utilisez des données réelles (OpenSky + Météo)
-   - Implémentez un monitoring des prédictions
+ - Activez le caching des prédictions
+ - Utilisez des données réelles (OpenSky + Météo)
+ - Implémentez un monitoring des prédictions
 
 3. **Pour l'API**:
-   - Utilisez gunicorn en production
-   - Activez HTTPS
-   - Limitez les CORS aux domaines autorisés
+ - Utilisez gunicorn en production
+ - Activez HTTPS
+ - Limitez les CORS aux domaines autorisés
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Erreur: "Modèles non trouvés"
 ```bash
@@ -317,14 +317,14 @@ pip install -r requirements.txt
 uvicorn api.fastapi_app:app --port 8001
 ```
 
-## 📚 Ressources
+## Ressources
 
 - **XGBoost**: https://xgboost.readthedocs.io/
 - **LightGBM**: https://lightgbm.readthedocs.io/
 - **FastAPI**: https://fastapi.tiangolo.com/
 - **OpenSky API**: https://opensky-network.org/apidoc/
 
-## 🎉 Next Steps
+## Next Steps
 
 1. Intégrer avec des données réelles (OpenSky API)
 2. Ajouter un frontend React/Vue.js
@@ -333,4 +333,4 @@ uvicorn api.fastapi_app:app --port 8001
 5. Ajouter des tests unitaires
 6. Créer un dashboard de visualisation
 
-Bon hackathon! 🚀
+Bon hackathon! 

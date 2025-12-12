@@ -1,4 +1,4 @@
-# 🛫 MODELANAC - Air Traffic ML System
+# MODELANAC - Air Traffic ML System
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com/)
@@ -7,36 +7,36 @@
 
 Système de Machine Learning pour la gestion intelligente du trafic aérien utilisant **3 modèles ML intégrés** : XGBoost et LightGBM.
 
-🔗 **API en production** : [https://tagba-ubuntuairlab.hf.space](https://tagba-ubuntuairlab.hf.space)  
-📚 **Documentation API** : [https://tagba-ubuntuairlab.hf.space/docs](https://tagba-ubuntuairlab.hf.space/docs)
+ **API en production** : [https://tagba-ubuntuairlab.hf.space](https://tagba-ubuntuairlab.hf.space) 
+ **Documentation API** : [https://tagba-ubuntuairlab.hf.space/docs](https://tagba-ubuntuairlab.hf.space/docs)
 
 ---
 
-## 🎯 Les 3 Modèles ML
+## Les 3 Modèles ML
 
-### 1️⃣ Modèle ETA/ETD Prediction
-**Algorithme** : XGBoost Regressor  
-**Fonction** : Prédit le temps d'arrivée ajusté avec probabilités de retard  
-**Performance** : MAE 4.56 min, R² 0.889  
+### 1⃣ Modèle ETA/ETD Prediction
+**Algorithme** : XGBoost Regressor 
+**Fonction** : Prédit le temps d'arrivée ajusté avec probabilités de retard 
+**Performance** : MAE 4.56 min, R² 0.889 
 
 **Sorties** :
 - `eta_ajuste` : Temps d'arrivée ajusté (minutes)
 - `proba_delay_15` : Probabilité retard > 15 min
 - `proba_delay_30` : Probabilité retard > 30 min
 
-### 2️⃣ Modèle Occupation Duration
-**Algorithme** : LightGBM Regressor  
-**Fonction** : Prédit la durée d'occupation d'un emplacement parking  
-**Performance** : MAE 4.19 min, R² 0.881  
+### 2⃣ Modèle Occupation Duration
+**Algorithme** : LightGBM Regressor 
+**Fonction** : Prédit la durée d'occupation d'un emplacement parking 
+**Performance** : MAE 4.19 min, R² 0.881 
 
 **Sorties** :
 - `temps_occupation_minutes` : Durée prédite
 - Intervalle de confiance à 95%
 
-### 3️⃣ Modèle Conflict Detection
-**Algorithme** : XGBoost Classifier (Multi-output)  
-**Fonction** : Détecte les conflits et recommande des actions  
-**Performance** : 96.75% accuracy  
+### 3⃣ Modèle Conflict Detection
+**Algorithme** : XGBoost Classifier (Multi-output) 
+**Fonction** : Détecte les conflits et recommande des actions 
+**Performance** : 96.75% accuracy 
 
 **Sorties** :
 - `risque_conflit` : 0/1 (conflit détecté)
@@ -52,7 +52,7 @@ Système de Machine Learning pour la gestion intelligente du trafic aérien util
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 Vol entrant → Modèle 1 (ETA) → Modèle 2 (Occupation) → Modèle 3 (Conflits) → Décision
@@ -65,7 +65,7 @@ Vol entrant → Modèle 1 (ETA) → Modèle 2 (Occupation) → Modèle 3 (Confli
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### Prérequis
 - Python 3.10+
@@ -95,7 +95,7 @@ L'API sera accessible sur : `http://localhost:8000`
 
 ---
 
-## 📡 Utilisation de l'API
+## Utilisation de l'API
 
 ### Exemple Python
 
@@ -104,34 +104,34 @@ import requests
 
 # Données de vol
 flight_data = {
-    "vitesse_actuelle": 250.0,
-    "altitude": 3500.0,
-    "distance_piste": 15.5,
-    "temperature": 22.0,
-    "vent_vitesse": 12.0,
-    "visibilite": 10.0,
-    "pluie": 0.5,
-    "compagnie": "Air France",
-    "retard_historique_compagnie": 8.5,
-    "trafic_approche": 5,
-    "occupation_tarmac": 0.65,
-    "type_avion": "A320",
-    "historique_occupation_avion": 45.0,
-    "type_vol": 0,
-    "passagers_estimes": 180,
-    "disponibilite_emplacements": 12,
-    "occupation_actuelle": 0.7,
-    "meteo_score": 0.85,
-    "trafic_entrant": 8,
-    "trafic_sortant": 6,
-    "priorite_vol": 0,
-    "emplacements_futurs_libres": 3
+ "vitesse_actuelle": 250.0,
+ "altitude": 3500.0,
+ "distance_piste": 15.5,
+ "temperature": 22.0,
+ "vent_vitesse": 12.0,
+ "visibilite": 10.0,
+ "pluie": 0.5,
+ "compagnie": "Air France",
+ "retard_historique_compagnie": 8.5,
+ "trafic_approche": 5,
+ "occupation_tarmac": 0.65,
+ "type_avion": "A320",
+ "historique_occupation_avion": 45.0,
+ "type_vol": 0,
+ "passagers_estimes": 180,
+ "disponibilite_emplacements": 12,
+ "occupation_actuelle": 0.7,
+ "meteo_score": 0.85,
+ "trafic_entrant": 8,
+ "trafic_sortant": 6,
+ "priorite_vol": 0,
+ "emplacements_futurs_libres": 3
 }
 
 # Appel à l'API
 response = requests.post(
-    "https://tagba-ubuntuairlab.hf.space/predict",
-    json=flight_data
+ "https://tagba-ubuntuairlab.hf.space/predict",
+ json=flight_data
 )
 
 result = response.json()
@@ -154,7 +154,7 @@ print(f"Décision: {result['model_3_conflict']['decision_label']}")
 
 ---
 
-## 🐳 Déploiement Docker
+## Déploiement Docker
 
 ```bash
 # Build l'image
@@ -166,7 +166,7 @@ docker run -p 8000:8000 air-traffic-ml
 
 ---
 
-## ☁️ Déploiement sur Hugging Face Spaces
+## Déploiement sur Hugging Face Spaces
 
 ### Configuration
 
@@ -193,38 +193,38 @@ Voir [DEPLOY_GUIDE.md](DEPLOY_GUIDE.md) pour plus de détails.
 
 ---
 
-## 📊 Structure du projet
+## Structure du projet
 
 ```
 MODELANAC/
-├── models/                      # Modèles ML
-│   ├── model_1_eta_prediction.py
-│   ├── model_2_occupation.py
-│   ├── model_3_conflict_detection.py
-│   ├── ml_pipeline.py          # Pipeline intégré
-│   ├── model_1_eta.pkl         # Modèle 1 entraîné
-│   ├── model_2_occupation.pkl  # Modèle 2 entraîné
-│   └── model_3_conflict.pkl    # Modèle 3 entraîné
-├── api/
-│   └── fastapi_app.py          # API REST
-├── scripts/
-│   ├── train_models.py         # Entraînement
-│   ├── test_pipeline.py        # Tests
-│   └── demo.py                 # Démonstration
-├── utils/
-│   └── data_collection.py      # Génération de données
-├── config/
-│   └── config.py               # Configuration
-├── Dockerfile                   # Containerisation
-├── requirements.txt            # Dépendances
-├── API_INTEGRATION_GUIDE.md    # Guide d'intégration
-├── DEPLOY_GUIDE.md             # Guide de déploiement
-└── README.md                   # Ce fichier
+ models/ # Modèles ML
+ model_1_eta_prediction.py
+ model_2_occupation.py
+ model_3_conflict_detection.py
+ ml_pipeline.py # Pipeline intégré
+ model_1_eta.pkl # Modèle 1 entraîné
+ model_2_occupation.pkl # Modèle 2 entraîné
+ model_3_conflict.pkl # Modèle 3 entraîné
+ api/
+ fastapi_app.py # API REST
+ scripts/
+ train_models.py # Entraînement
+ test_pipeline.py # Tests
+ demo.py # Démonstration
+ utils/
+ data_collection.py # Génération de données
+ config/
+ config.py # Configuration
+ Dockerfile # Containerisation
+ requirements.txt # Dépendances
+ API_INTEGRATION_GUIDE.md # Guide d'intégration
+ DEPLOY_GUIDE.md # Guide de déploiement
+ README.md # Ce fichier
 ```
 
 ---
 
-## 🧪 Tests
+## Tests
 
 ```bash
 # Test du pipeline complet
@@ -236,7 +236,7 @@ python scripts/demo.py
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - **[API_INTEGRATION_GUIDE.md](API_INTEGRATION_GUIDE.md)** : Guide complet d'intégration API avec exemples Python, cURL, JavaScript
 - **[DEPLOY_GUIDE.md](DEPLOY_GUIDE.md)** : Instructions de déploiement (Docker, Hugging Face)
@@ -244,7 +244,7 @@ python scripts/demo.py
 
 ---
 
-## 📦 Technologies
+## Technologies
 
 - **Python 3.10+** : Langage principal
 - **FastAPI** : Framework web moderne
@@ -259,7 +259,7 @@ python scripts/demo.py
 
 ---
 
-## 🤝 Contribution
+## Contribution
 
 Les contributions sont les bienvenues ! 
 
@@ -271,21 +271,21 @@ Les contributions sont les bienvenues !
 
 ---
 
-## 📄 Licence
+## Licence
 
 MIT License
 
 ---
 
-## 👥 Auteurs
+## Auteurs
 
 **UbuntuairLab Organisation**
-- 🔗 GitHub: [@UbuntuairLab](https://github.com/UbuntuairLab)
-- 🤗 Hugging Face: [@TAGBA](https://huggingface.co/TAGBA)
+- GitHub: [@UbuntuairLab](https://github.com/UbuntuairLab)
+- Hugging Face: [@TAGBA](https://huggingface.co/TAGBA)
 
 ---
 
-## 🔗 Liens utiles
+## Liens utiles
 
 - **API Production** : https://tagba-ubuntuairlab.hf.space
 - **Documentation API** : https://tagba-ubuntuairlab.hf.space/docs
@@ -294,7 +294,7 @@ MIT License
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ```bash
 # Clone et setup
@@ -304,8 +304,8 @@ pip install -r requirements.txt
 
 # Test rapide
 curl -X POST "https://tagba-ubuntuairlab.hf.space/predict" \
-  -H "Content-Type: application/json" \
-  -d '{"vitesse_actuelle": 250, "altitude": 3500, ...}'
+ -H "Content-Type: application/json" \
+ -d '{"vitesse_actuelle": 250, "altitude": 3500, ...}'
 ```
 
 ---
