@@ -1,336 +1,273 @@
-# Guide de Démarrage Rapide - Air Traffic ML
+# Air Traffic ML System
 
-##  Installation
+Système de Machine Learning pour la gestion intelligente du trafic aérien utilisant 3 modèles ML intégrés : XGBoost et LightGBM.
 
-### 1. Créer un environnement virtuel
+## Description
 
+Ce projet implémente 3 modèles de Machine Learning pour optimiser la gestion du trafic aérien :
+
+1. **Modèle 1 - Prédiction ETA/ETD** : Prédit les retards d'arrivée/départ avec probabilités de retard >15min et >30min
+2. **Modèle 2 - Occupation des emplacements** : Estime la durée d'occupation d'un emplacement de parking avec intervalle de confiance
+3. **Modèle 3 - Détection de conflits** : Identifie les conflits potentiels, détecte la saturation et recommande des actions
+
+## API en Production
+
+**URL de base**: https://tagba-ubuntuairlab.hf.space  
+**Documentation interactive**: https://tagba-ubuntuairlab.hf.space/docs  
+**Hugging Face Space**: https://huggingface.co/spaces/TAGBA/ubuntuairlab  
+**Repository GitHub**: https://github.com/UbuntuairLab/MODELANAC
+
+### Endpoints disponibles
+
+- `GET /` - Information de l'API
+- `GET /health` - Vérification de l'état des modèles
+- `POST /predict` - Prédiction complète pour un vol
+- `GET /models/info` - Détails techniques des modèles
+- `GET /docs` - Documentation OpenAPI interactive
+
+## Technologies utilisées
+
+- **Python 3.10+** : Langage principal
+- **XGBoost 3.1.2** : Modèles 1 (ETA/ETD) et 3 (Détection conflits)
+- **LightGBM 4.6.0** : Modèle 2 (Occupation)
+- **FastAPI** : Framework API REST moderne
+- **scikit-learn 1.6.1** : Preprocessing et métriques
+- **Pandas 2.2.3** : Manipulation de données
+- **NumPy 1.26.4** : Calculs numériques
+- **Pydantic 2.10.6** : Validation de données
+- **Uvicorn** : Serveur ASGI
+
+## Performances des Modèles
+
+### Modèle 1 - Prédiction ETA/ETD (XGBoost Regressor)
+- MAE: 4.56 minutes
+- R²: 0.889
+- Accuracy retard >15min: 99.25%
+
+### Modèle 2 - Durée d'occupation (LightGBM Regressor)
+- MAE: 4.19 minutes
+- R²: 0.881
+- MAPE: 7.06%
+
+### Modèle 3 - Détection de conflits (XGBoost Classifier)
+- Accuracy conflit: 96.75%
+- Accuracy saturation: 56%
+- Accuracy décision: 93%
+
+## Installation locale
+
+### 1. Cloner le projet
 ```bash
-cd /home/computer-12/Documents/MODELANAC
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
+git clone https://github.com/UbuntuairLab/MODELANAC.git
+cd MODELANAC
 ```
 
-### 2. Installer les dépendances
+### 2. Créer un environnement virtuel
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# ou
+venv\Scripts\activate  # Windows
+```
 
+### 3. Installer les dépendances
 ```bash
 pip install -r requirements.txt
 ```
 
-##  Architecture du Projet
+## Utilisation
 
-```
-MODELANAC/
- models/
-    model_1_eta_prediction.py      # Modèle 1: Prédiction ETA/ETD (XGBoost)
-    model_2_occupation.py          # Modèle 2: Durée d'occupation (LightGBM)
-    model_3_conflict_detection.py  # Modèle 3: Détection conflits (XGBoost Classifier)
-    ml_pipeline.py                 # Pipeline d'orchestration
-    model_1_eta.pkl               # Modèle 1 sauvegardé (après entraînement)
-    model_2_occupation.pkl        # Modèle 2 sauvegardé (après entraînement)
-    model_3_conflict.pkl          # Modèle 3 sauvegardé (après entraînement)
- api/
-    fastapi_app.py                # API REST FastAPI
- scripts/
-    train_models.py               # Script d'entraînement
-    test_pipeline.py              # Script de test
- config/
-    config.py                     # Configuration centralisée
- data/                             # Données (à créer)
- logs/                             # Logs (à créer)
- requirements.txt                  # Dépendances Python
-```
-
-##  Étape 1: Entraîner les Modèles
-
-### Option A: Utilisation du script d'entraînement
-
-```bash
-cd /home/computer-12/Documents/MODELANAC
-python scripts/train_models.py --samples 2000
-```
-
-### Option B: Entraînement manuel avec Python
-
-```python
-from models.ml_pipeline import AirTrafficMLPipeline
-from models.model_1_eta_prediction import create_sample_data as create_data_m1
-from models.model_2_occupation import create_sample_data as create_data_m2
-from models.model_3_conflict_detection import create_sample_data as create_data_m3
-
-# Créer les données
-df_m1 = create_data_m1(2000)
-df_m2 = create_data_m2(2000)
-df_m3 = create_data_m3(2000)
-
-# Entraîner
-pipeline = AirTrafficMLPipeline()
-metrics = pipeline.train_all_models(df_m1, df_m2, df_m3)
-```
-
-##  Étape 2: Tester le Pipeline
-
-```bash
-python scripts/test_pipeline.py
-```
-
-##  Étape 3: Lancer l'API FastAPI
-
-### Option A: Lancement direct
-
-```bash
-cd /home/computer-12/Documents/MODELANAC
-python api/fastapi_app.py
-```
-
-### Option B: Avec uvicorn
-
-```bash
-cd /home/computer-12/Documents/MODELANAC
-uvicorn api.fastapi_app:app --host 0.0.0.0 --port 8000 --reload
-```
-
-Accédez à:
-- **Documentation interactive**: http://localhost:8000/docs
-- **Documentation alternative**: http://localhost:8000/redoc
-- **API**: http://localhost:8000
-
-##  Utilisation de l'API
-
-### 1. Vérifier l'état de l'API
-
-```bash
-curl http://localhost:8000/health
-```
-
-### 2. Prédiction pour un vol
-
-```bash
-curl -X POST "http://localhost:8000/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "callsign": "AFR1234",
-    "vitesse_actuelle": 450,
-    "altitude": 6000,
-    "distance_piste": 40,
-    "temperature": 15,
-    "vent_vitesse": 25,
-    "visibilite": 8,
-    "pluie": 2,
-    "compagnie": "AF",
-    "retard_historique_compagnie": 12,
-    "trafic_approche": 8,
-    "occupation_tarmac": 0.7,
-    "type_avion": "A320",
-    "historique_occupation_avion": 45,
-    "type_vol": 1,
-    "passagers_estimes": 180,
-    "disponibilite_emplacements": 12,
-    "occupation_actuelle": 0.75,
-    "meteo_score": 4,
-    "trafic_entrant": 10,
-    "trafic_sortant": 6,
-    "priorite_vol": 3,
-    "emplacements_futurs_libres": 8
-  }'
-```
-
-### 3. Entraîner via l'API (données synthétiques)
-
-```bash
-curl -X POST "http://localhost:8000/train"
-```
-
-##  Les 3 Modèles Expliqués
-
-### Modèle 1: Prédiction ETA/ETD (XGBoost Regressor)
-
-**Objectif**: Prédire le retard d'arrivée et les probabilités de retard
-
-**Entrées**:
-- Vitesse, altitude, distance à la piste
-- Météo (température, vent, pluie, visibilité)
-- Compagnie et retard historique
-- Trafic et occupation du tarmac
-- Heure locale
-
-**Sorties**:
-- Retard prédit (minutes)
-- Probabilité de retard > 15 min
-- Probabilité de retard > 30 min
-
-**Performances typiques**:
-- MAE: ~3-5 minutes
-- R²: ~0.85-0.90
-
-### Modèle 2: Durée d'Occupation (LightGBM Regressor)
-
-**Objectif**: Prédire le temps réel d'occupation d'un emplacement
-
-**Entrées**:
-- Type d'avion et historique occupation
-- Compagnie
-- Météo
-- Type de vol (domestique/international)
-- Nombre de passagers
-- Retard à l'arrivée (depuis Modèle 1)
-
-**Sorties**:
-- Temps d'occupation prédit (minutes)
-- Intervalle de confiance [min, max]
-
-**Performances typiques**:
-- MAE: ~4-6 minutes
-- R²: ~0.80-0.88
-
-### Modèle 3: Détection de Conflits (XGBoost Classifier)
-
-**Objectif**: Détecter les conflits et recommander une décision
-
-**Entrées**:
-- Prédictions des Modèles 1 & 2
-- Disponibilité des emplacements
-- Météo prévue
-- Trafic entrant/sortant
-- Priorité du vol
-
-**Sorties**:
-- Risque de conflit (0-1)
-- Risque de saturation (0-1)
-- Décision recommandée:
-  - 0: Garder sur emplacement actuel
-  - 1: Réaffecter à un autre emplacement commercial
-  - 2: Envoyer au parking militaire
-  - 3: Mettre en attente aérienne
-
-**Performances typiques**:
-- Accuracy conflit: ~85-92%
-- Accuracy décision: ~80-88%
-
-##  Exemples d'Utilisation Python
-
-### Utilisation du pipeline complet
-
-```python
-from models.ml_pipeline import AirTrafficMLPipeline
-
-# Charger les modèles
-pipeline = AirTrafficMLPipeline(
-    model1_path='models/model_1_eta.pkl',
-    model2_path='models/model_2_occupation.pkl',
-    model3_path='models/model_3_conflict.pkl'
-)
-
-# Données d'un vol
-flight_data = {
-    'callsign': 'AFR1234',
-    'vitesse_actuelle': 450,
-    'altitude': 6000,
-    # ... autres features
-}
-
-# Prédiction
-result = pipeline.predict_full_pipeline(flight_data)
-
-print(f"Retard prédit: {result['modele_1_eta']['retard_predit_minutes']:.1f} min")
-print(f"Temps occupation: {result['modele_2_occupation']['temps_occupation_minutes']:.1f} min")
-print(f"Décision: {result['modele_3_decision']['decision_recommandee']}")
-```
-
-### Utilisation individuelle des modèles
-
-```python
-from models.model_1_eta_prediction import ETAPredictionModel
-import pandas as pd
-
-# Charger le modèle
-model = ETAPredictionModel()
-model.load('models/model_1_eta.pkl')
-
-# Prédire
-df = pd.DataFrame([{
-    'vitesse_actuelle': 450,
-    'altitude': 6000,
-    # ... autres features
-}])
-
-predictions = model.predict(df)
-print(f"ETA ajusté: {predictions['eta_ajuste'][0]:.1f} min")
-```
-
-##  Feature Importance
-
-Pour voir les features les plus importantes:
-
-```python
-from models.model_1_eta_prediction import ETAPredictionModel
-
-model = ETAPredictionModel()
-model.load('models/model_1_eta.pkl')
-
-# Top 10 features
-importance = model.get_feature_importance(top_n=10)
-print(importance)
-```
-
-##  Configuration
-
-Modifiez `config/config.py` pour:
-- Ajuster les hyperparamètres des modèles
-- Changer les seuils de risque
-- Configurer l'API
-- Définir les temps de base d'occupation par avion
-
-##  Logs
-
-Les logs sont automatiquement générés dans `logs/air_traffic_ml.log`
-
-##  Performance Tips
-
-1. **Pour l'entraînement**:
-   - Utilisez plus de données (--samples 5000)
-   - Ajustez les hyperparamètres dans config.py
-
-2. **Pour la production**:
-   - Activez le caching des prédictions
-   - Utilisez des données réelles (OpenSky + Météo)
-   - Implémentez un monitoring des prédictions
-
-3. **Pour l'API**:
-   - Utilisez gunicorn en production
-   - Activez HTTPS
-   - Limitez les CORS aux domaines autorisés
-
-##  Troubleshooting
-
-### Erreur: "Modèles non trouvés"
+### Entraîner les modèles
 ```bash
 python scripts/train_models.py
 ```
 
-### Erreur: "Module not found"
+Cela va :
+- Générer des données synthétiques d'entraînement
+- Entraîner les 3 modèles
+- Sauvegarder les modèles dans `models/`
+- Afficher les métriques de performance
+
+### Tester le pipeline
 ```bash
-pip install -r requirements.txt
+python scripts/test_pipeline.py
 ```
 
-### Port 8000 déjà utilisé
+### Lancer l'API en local
 ```bash
-uvicorn api.fastapi_app:app --port 8001
+python api/fastapi_app.py
 ```
 
-##  Ressources
+L'API sera accessible sur `http://localhost:8000`
+- Documentation: http://localhost:8000/docs
+- Health check: http://localhost:8000/health
 
-- **XGBoost**: https://xgboost.readthedocs.io/
-- **LightGBM**: https://lightgbm.readthedocs.io/
-- **FastAPI**: https://fastapi.tiangolo.com/
-- **OpenSky API**: https://opensky-network.org/apidoc/
+### Démonstration
+```bash
+python scripts/demo.py
+```
 
-##  Next Steps
+## Exemple d'utilisation de l'API
 
-1. Intégrer avec des données réelles (OpenSky API)
-2. Ajouter un frontend React/Vue.js
-3. Implémenter un système de monitoring
-4. Déployer sur un serveur de production
-5. Ajouter des tests unitaires
-6. Créer un dashboard de visualisation
+### Python
+```python
+import requests
 
-Bon hackathon! 
+url = "https://tagba-ubuntuairlab.hf.space/predict"
+
+flight_data = {
+    "vitesse_actuelle": 250.0,
+    "altitude": 3500.0,
+    "distance_piste": 15.5,
+    "temperature": 22.0,
+    "vent_vitesse": 12.0,
+    "visibilite": 10.0,
+    "pluie": 0.5,
+    "compagnie": "Air France",
+    "retard_historique_compagnie": 8.5,
+    "trafic_approche": 5,
+    "occupation_tarmac": 0.65,
+    "type_avion": "A320",
+    "historique_occupation_avion": 45.0,
+    "type_vol": 0,
+    "passagers_estimes": 180,
+    "disponibilite_emplacements": 12,
+    "occupation_actuelle": 0.7,
+    "meteo_score": 0.85,
+    "trafic_entrant": 8,
+    "trafic_sortant": 6,
+    "priorite_vol": 0,
+    "emplacements_futurs_libres": 3
+}
+
+response = requests.post(url, json=flight_data)
+result = response.json()
+
+print(f"ETA ajusté: {result['model_1_eta']['eta_ajuste']} minutes")
+print(f"Durée occupation: {result['model_2_occupation']['temps_occupation_minutes']} minutes")
+print(f"Décision: {result['model_3_conflict']['decision_label']}")
+```
+
+### cURL
+```bash
+curl -X POST "https://tagba-ubuntuairlab.hf.space/predict" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "vitesse_actuelle": 250.0,
+    "altitude": 3500.0,
+    "distance_piste": 15.5,
+    "temperature": 22.0,
+    "vent_vitesse": 12.0,
+    "visibilite": 10.0,
+    "pluie": 0.5,
+    "compagnie": "Air France",
+    "retard_historique_compagnie": 8.5,
+    "trafic_approche": 5,
+    "occupation_tarmac": 0.65,
+    "type_avion": "A320",
+    "historique_occupation_avion": 45.0,
+    "type_vol": 0,
+    "passagers_estimes": 180,
+    "disponibilite_emplacements": 12,
+    "occupation_actuelle": 0.7,
+    "meteo_score": 0.85,
+    "trafic_entrant": 8,
+    "trafic_sortant": 6,
+    "priorite_vol": 0,
+    "emplacements_futurs_libres": 3
+  }'
+```
+
+## Structure du projet
+
+```
+MODELANAC/
+├── models/                      # Modèles ML
+│   ├── model_1_eta_prediction.py
+│   ├── model_2_occupation.py
+│   ├── model_3_conflict_detection.py
+│   ├── ml_pipeline.py          # Pipeline intégré
+│   ├── model_1_eta.pkl         # Modèle 1 entraîné
+│   ├── model_2_occupation.pkl  # Modèle 2 entraîné
+│   └── model_3_conflict.pkl    # Modèle 3 entraîné
+├── api/
+│   └── fastapi_app.py          # API REST
+├── scripts/
+│   ├── train_models.py         # Entraînement
+│   ├── test_pipeline.py        # Tests
+│   └── demo.py                 # Démonstration
+├── utils/
+│   └── data_collection.py      # Génération de données
+├── config/
+│   └── config.py               # Configuration
+├── Dockerfile                   # Containerisation
+├── requirements.txt            # Dépendances
+├── API_INTEGRATION_GUIDE.md    # Guide d'intégration
+├── DEPLOY_GUIDE.md             # Guide de déploiement
+└── README.md                   # Ce fichier
+```
+
+## Déploiement Docker
+
+```bash
+# Build l'image
+docker build -t air-traffic-ml .
+
+# Run le container
+docker run -p 8000:8000 air-traffic-ml
+```
+
+## Documentation
+
+- **API_INTEGRATION_GUIDE.md** : Guide complet d'intégration API avec exemples Python, cURL, JavaScript
+- **DEPLOY_GUIDE.md** : Instructions de déploiement (Docker, Hugging Face)
+- **MODELS_INTEGRATION.md** : Documentation technique de l'intégration des 3 modèles
+
+## Architecture Pipeline
+
+Le système utilise un pipeline séquentiel intégré :
+
+```
+Vol entrant → Modèle 1 (ETA) → Modèle 2 (Occupation) → Modèle 3 (Conflits) → Décision
+```
+
+1. **Modèle 1** prédit l'ETA ajusté et les probabilités de retard
+2. **Modèle 2** utilise l'ETA pour prédire la durée d'occupation
+3. **Modèle 3** analyse tout pour détecter les conflits et recommander une action
+
+### Codes de décision (Modèle 3)
+- `0`: Conserver l'emplacement actuel
+- `1`: Réaffecter à un autre emplacement
+- `2`: Envoyer vers zone militaire/cargo
+- `3`: Mise en attente (holding pattern)
+
+## Contribution
+
+Les contributions sont les bienvenues ! 
+
+1. Fork le projet
+2. Créer une branche (`git checkout -b feature/AmazingFeature`)
+3. Commit les changements (`git commit -m 'Add AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrir une Pull Request
+
+## Licence
+
+MIT License
+
+## Auteurs
+
+**UbuntuairLab Organisation**
+- GitHub: [@UbuntuairLab](https://github.com/UbuntuairLab)
+- Hugging Face: [@TAGBA](https://huggingface.co/TAGBA)
+
+## Liens utiles
+
+- **API Production** : https://tagba-ubuntuairlab.hf.space
+- **Documentation API** : https://tagba-ubuntuairlab.hf.space/docs
+- **Hugging Face Space** : https://huggingface.co/spaces/TAGBA/ubuntuairlab
+- **Repository GitHub** : https://github.com/UbuntuairLab/MODELANAC
+
+---
+
+*Système développé pour la gestion intelligente du trafic aérien - 3 modèles ML intégrés*
