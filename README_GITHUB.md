@@ -14,7 +14,7 @@ Système de Machine Learning pour la gestion intelligente du trafic aérien util
 
 ## Les 3 Modèles ML
 
-### 1⃣ Modèle ETA/ETD Prediction
+### Modèle ETA/ETD Prediction
 **Algorithme** : XGBoost Regressor 
 **Fonction** : Prédit le temps d'arrivée ajusté avec probabilités de retard 
 **Performance** : MAE 4.56 min, R² 0.889 
@@ -24,7 +24,7 @@ Système de Machine Learning pour la gestion intelligente du trafic aérien util
 - `proba_delay_15` : Probabilité retard > 15 min
 - `proba_delay_30` : Probabilité retard > 30 min
 
-### 2⃣ Modèle Occupation Duration
+### Modèle Occupation Duration
 **Algorithme** : LightGBM Regressor 
 **Fonction** : Prédit la durée d'occupation d'un emplacement parking 
 **Performance** : MAE 4.19 min, R² 0.881 
@@ -33,7 +33,7 @@ Système de Machine Learning pour la gestion intelligente du trafic aérien util
 - `temps_occupation_minutes` : Durée prédite
 - Intervalle de confiance à 95%
 
-### 3⃣ Modèle Conflict Detection
+### Modèle Conflict Detection
 **Algorithme** : XGBoost Classifier (Multi-output) 
 **Fonction** : Détecte les conflits et recommande des actions 
 **Performance** : 96.75% accuracy 
